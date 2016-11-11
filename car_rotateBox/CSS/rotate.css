@@ -1,0 +1,292 @@
+body{
+	background: #000;
+}
+@font-face{
+	font-family: "Trattatello","STFangsong";
+	src:url("../Trattatello.ttf"),url("../华文仿宋.ttf");
+}
+.eyes{
+	
+	height: 700px;
+	-webkit-perspective: 1000px;
+	-moz-perspective: 1000px;
+	-ms-perspective: 1000px;
+	-o-perspective: 1000px;
+	perspective: 1000px;
+}
+.box{
+	
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	width: 200px;
+	height: 200px;
+	float: left;
+	margin: 100px;
+	border: 1px solid transparent;
+	
+	-webkit-animation: rotate 2s linear infinite ;
+	-moz-animation: rotate 2s linear infinite ;
+	-ms-animation: rotate 2s linear infinite ;
+	-o-animation: rotate 2s linear infinite ;
+	animation: rotate 2s linear infinite ;
+
+}
+.small{
+	margin: 50px;
+	font-family: "Trattatello","STFangsong";
+	font-size: 80px;
+	text-align: center;
+	line-height: 100px;
+	color: gold;
+}
+.small div{
+	width: 100px;
+	height: 100px;
+	background-color: #FFE4C4;
+	position: absolute;
+}
+.middle{
+	margin: 25px;
+	font-family: "Trattatello","STFangsong";
+	font-size: 80px;
+	text-align: center;
+	line-height: 150px;
+	color: gold;
+}
+.middle div{
+	width: 150px;
+	height: 150px;
+	background-color: red;
+	opacity: 0.3;
+	position: absolute;
+}
+.big{
+	margin-top: -50px;
+	font-family: "Trattatello","STFangsong";
+	font-size: 120px;
+	text-align: center;
+	line-height: 200px;
+	color: white;
+	border: 1px solid transparent;
+}
+.big div{
+	width: 200px;
+	height: 200px;
+	background: rgba(187,255,255,0.5);
+	position: absolute;
+	border: 1px solid red;
+	
+	-webkit-transition:all 2s linear; 
+	-moz-transition:all 2s linear; 
+	-ms-transition:all 2s linear; 
+	-o-transition:all 2s linear; 
+	transition:all 2s linear;   /*这个可以有*/
+
+}
+
+
+@-webkit-keyframes rotate{
+	0%{
+		
+		-webkit-transform: rotateY(0deg);
+		-moz-transform: rotateY(0deg);
+		-ms-transform: rotateY(0deg);
+		-o-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+	100%{
+		
+		-webkit-transform: rotateY(-360deg);
+		-moz-transform: rotateY(-360deg);
+		-ms-transform: rotateY(-360deg);
+		-o-transform: rotateY(-360deg);
+		transform: rotateY(-360deg) ;
+	}
+}
+@-moz-keyframes rotate{
+	0%{
+		
+		-webkit-transform: rotateY(0deg);
+		-moz-transform: rotateY(0deg);
+		-ms-transform: rotateY(0deg);
+		-o-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+	100%{
+		
+		-webkit-transform: rotateY(-360deg);
+		-moz-transform: rotateY(-360deg);
+		-ms-transform: rotateY(-360deg);
+		-o-transform: rotateY(-360deg);
+		transform: rotateY(-360deg) ;
+	}
+}
+@-o-keyframes rotate{
+	0%{
+		
+		-webkit-transform: rotateY(0deg);
+		-moz-transform: rotateY(0deg);
+		-ms-transform: rotateY(0deg);
+		-o-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+	100%{
+		
+		-webkit-transform: rotateY(-360deg);
+		-moz-transform: rotateY(-360deg);
+		-ms-transform: rotateY(-360deg);
+		-o-transform: rotateY(-360deg);
+		transform: rotateY(-360deg) ;
+	}
+}
+@keyframes rotate{
+	0%{
+		
+		-webkit-transform: rotateY(0deg);
+		-moz-transform: rotateY(0deg);
+		-ms-transform: rotateY(0deg);
+		-o-transform: rotateY(0deg);
+		transform: rotateY(0deg);
+	}
+	100%{
+		
+		-webkit-transform: rotateY(-360deg);
+		-moz-transform: rotateY(-360deg);
+		-ms-transform: rotateY(-360deg);
+		-o-transform: rotateY(-360deg);
+		transform: rotateY(-360deg) ;
+	}
+}
+
+
+.d1{
+	transform:translateZ(50px);
+}
+.d2{
+	transform:rotateY(90deg) translateZ(50px);
+}
+.d3{
+	transform:rotateY(180deg) translateZ(50px);
+}
+.d4{
+	transform:rotateY(270deg) translateZ(50px);
+}
+.d5{
+	transform:rotateX(90deg) translateZ(50px);
+}
+.d6{
+	transform:rotateX(-90deg) translateZ(50px);
+}
+.d7{
+	
+	-webkit-transform:translateZ(100px);
+	-moz-transform: translateZ(100px);
+	-ms-transform: translateZ(100px);
+	-o-transform: translateZ(100px);
+	transform:translateZ(100px);
+}
+.d8{
+	
+	-webkit-transform:rotateY(90deg) translateZ(100px);
+	-moz-transform: rotateY(90deg) translateZ(100px);
+	-ms-transform: rotateY(90deg) translateZ(100px);
+	-o-transform: rotateY(90deg) translateZ(100px);
+	transform:rotateY(90deg) translateZ(100px);
+
+}
+.d9{
+	
+	-webkit-transform: rotateY(180deg) translateZ(100px);
+	-moz-transform: rotateY(180deg) translateZ(100px);
+	-ms-transform: rotateY(180deg) translateZ(100px);
+	-o-transform: rotateY(180deg) translateZ(100px);
+	transform:rotateY(180deg) translateZ(100px);
+}
+.d10{
+	
+	-webkit-transform: rotateY(270deg) translateZ(100px);
+	-moz-transform: rotateY(270deg) translateZ(100px);
+	-ms-transform: rotateY(270deg) translateZ(100px);
+	-o-transform: rotateY(270deg) translateZ(100px);
+	transform:rotateY(270deg) translateZ(100px);
+}
+.d11{
+	
+	-webkit-transform: rotateX(90deg) translateZ(100px);
+	-moz-transform: rotateX(90deg) translateZ(100px);
+	-ms-transform: rotateX(90deg) translateZ(100px);
+	-o-transform: rotateX(90deg) translateZ(100px);
+	transform:rotateX(90deg) translateZ(100px);
+}
+.d12{
+	
+	-webkit-transform:rotateX(-90deg) translateZ(100px);
+	-moz-transform: rotateX(-90deg) translateZ(100px);
+	-ms-transform: rotateX(-90deg) translateZ(100px);
+	-o-transform: rotateX(-90deg) translateZ(100px);
+	transform:rotateX(-90deg) translateZ(100px);
+}
+
+.d13{
+	transform:translateZ(75px);
+}
+.d14{
+	transform:rotateY(90deg) translateZ(75px);
+}
+.d15{
+	transform:rotateY(180deg) translateZ(75px);
+}
+.d16{
+	transform:rotateY(270deg) translateZ(75px);
+}
+.d17{
+	transform:rotateX(90deg) translateZ(75px);
+}
+.d18{
+	transform:rotateX(-90deg) translateZ(75px);
+}
+
+.box:hover .d7{
+	transform:translateZ(200px);
+}
+.box:hover .d8{
+	transform:rotateY(90deg) translateZ(200px);
+
+}
+.box:hover .d9{
+	transform:rotateY(180deg) translateZ(200px);
+}
+.box:hover .d10{
+	transform:rotateY(270deg) translateZ(200px);
+}
+.box:hover .d11{
+	transform:rotateX(90deg) translateZ(200px);
+}
+.box:hover .d12{
+	transform:rotateX(-90deg) translateZ(200px);
+}
+.box:hover .d13{
+	transform:translateZ(125px);
+}
+.box:hover .d14{
+	transform:rotateY(90deg) translateZ(125px);
+}
+.box:hover .d15{
+	transform:rotateY(180deg) translateZ(125px);
+}
+.box:hover .d16{
+	transform:rotateY(270deg) translateZ(125px);
+}
+.box:hover .d17{
+	transform:rotateX(90deg) translateZ(125px);
+}
+.box:hover .d18{
+	transform:rotateX(-90deg) translateZ(125px);
+}
+.box:hover .big>div{
+	border-radius: 50%;
+}
+

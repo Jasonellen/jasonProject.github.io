@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>创意时钟</title>
+	<script src="commStyle/jason.js"></script>
+	<style>
+		body,ol,ul,li{
+			margin:0;
+			padding: 0;
+			list-style: none;
+		}
+		ul{
+			width: 500px;
+			height: 500px;
+			margin:50px auto 0;
+			background: black;
+			border-radius: 50%;
+			position: relative;
+		}
+		ul>li{
+			width: 4px;
+			height: 14px;
+			background: white;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin:-7px 0 0 -2px;
+			color: white;
+		}
+		ol{
+			width: 500px;
+			height: 500px;
+			margin:-500px auto;
+			color: white;
+			text-align: center;
+			position: relative;
+		}
+		ol>li{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+		}
+		.hrs{
+			width: 50px;
+			height: 50px;
+			border: 4px solid green;
+			border-radius: 50%;
+			line-height: 50px;
+			font-size: 30px;
+			margin:-29px 0 0 -29px;
+			transition: 3600s linear;
+		}
+		.mts{
+			width: 40px;
+			height: 40px;
+			border: 4px solid brown;
+			border-radius: 50%;
+			line-height: 40px;
+			font-size: 24px;
+			margin:-24px 0 0 -24px;
+			transition: 60s linear;
+		}
+		.sds{
+			width: 30px;
+			height: 30px;
+			border: 4px solid white;
+			border-radius: 50%;
+			margin:-19px 0 0 -19px;
+			transition: 1s linear;
+			line-height: 30px;
+			color: gold;
+			font-weight: bold;
+		}
+		.active{
+			animation:change 1s linear forwards;
+		}
+		@keyframes change{
+			from{
+				transform:rotate(-6deg);
+			}
+			to{
+				transform:rotate(0deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<ul class="clock"></ul>
+	<ol>
+		<li class="hrs"></li>
+		<li class="mts"></li>
+		<li class="sds"></li>
+	</ol>
+
+	<script>
+
+		// 表盘
+		var clock = jason.$("ul");
+		var str="";
+		for(var i=0; i<60; i++){
+			str += "<li></li>"
+		}
+		clock.innerHTML = str;
+		var aLi = jason.$all("ul>li");
+		for(var i=0; i<60; i++){
+			jason.setStyle(aLi[i],"transform","rotate("+i*6+"deg) translateY(-230px)");
+			aLi[0].style.background="transparent";
+			aLi[0].style.marginLeft="-8px";
+			aLi[0].innerHTML="12";
+			aLi[15].style.background="transparent";
+			aLi[15].style.transform="translateX(230px)";
+			aLi[15].innerHTML="3";
+			aLi[30].style.background="transparent";
+			aLi[30].innerHTML="9";
+			aLi[45].style.background="transparent";
+			aLi[45].style.transform="translateX(-230px)";
+			aLi[45].innerHTML="9";
+		}
+		// 获取时间
+		var n=0,n1=0,n2=0;
+		var timer=null;
+		run();
+		timer =setInterval(function(){
+			run();
+		},1000);
+
+		function run(){
+			var date = new Date();
+			var hours =date.getHours();
+			var minutes =date.getMinutes();
+			var seconds =date.getSeconds();
+			// 时分秒圆圈
+			var hrs = jason.$(".hrs");
+			var mts = jason.$(".mts");
+			var sds = jason.$(".sds");
+
+			if(seconds == 0){ n++; }
+			if(hours == 0 && seconds == 0){ n1++;}
+			if(minutes == 0 && seconds == 0){ n2++;}
+			hrs.style.transform="rotate("+(hours*30+n1*360)+"deg) translateY(-100px)";
+			mts.style.transform="rotate("+(minutes*6+n2*360)+"deg) translateY(-160px)";
+			sds.style.transform="rotate("+(seconds*6+n*360)+"deg) translateY(-230px)";
+			
+			if(hours<10)  { hours="0"+hours;     }
+			if(minutes<10){ minutes="0"+minutes; }
+			if(seconds<10){ seconds="0"+seconds; }
+			hrs.innerHTML=hours;
+			mts.innerHTML=minutes;
+			sds.innerHTML=seconds;
+		}
+	</script>
+</body>
+</html>

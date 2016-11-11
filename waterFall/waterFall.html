@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>瀑布流</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+	<style>
+		ul{
+			margin:0 auto;
+			padding:0;
+			list-style: none;
+			position: relative;
+		}
+		li{
+			padding:10px;
+			float: left;
+		}
+		li>img{
+			vertical-align: top; /*使得每个边的间隙一样大-图片默认样式*/
+			border-radius: 5px;
+			width: 200px;
+			box-shadow: 0 0 2px 5px #666;
+		}
+	</style>
+</head>
+<body>
+	<ul></ul>
+	<script>
+		var ul = document.querySelector("ul");
+		var li =document.querySelectorAll("li");
+		var num,minHeight=0;
+		var heightArr=[];
+		
+		var str="";
+		var onOff=0;
+		window.onload = function(){
+			// js动态添加的标签，如若没有设置宽高，只有在onload里才能使用offset获取，标签在onload外产生
+			buju();
+
+			window.onresize =function(){
+				n++;
+				if( n >20 ){ 
+					var li =document.querySelectorAll("li");
+					// 这里就是要重新获取一下li不然就不行
+					for(var i=0; i<li.length; i++){
+						li[i].style.position="";
+					}  //清除定位，用float填满
+					onOff = 1;
+				 }
+				if(onOff){ 
+					buju();
+				    n=0; 
+					onOff = 0;
+				}	
+			}
+
+			addMore();
+			window.onscroll = function(){
+				addMore();
+			}
+		}
+
+		// 添加图片并获取 UL LI 
+		var arr=["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg","9.jpg","10.jpg","11.jpg",];
+		function addImg(){
+			for(var i=0; i<arr.length; i++ ){
+				str += `<li><img src="${i+1}.jpg"/></li>`;
+			}
+			ul.innerHTML += str;	
+		}
+		addImg(); // 在onload外执行一次，添加标签到HTML文档  
+
+		//获取并创建heightArr 不能直接执行，执行在window.onLoad中执行，否则offset获取的不对
+		function getMinHeight(num,obj){
+			var heightArr=[];
+			for(var i=0; i<num; i++){
+				heightArr.push(obj[i].offsetHeight);
+			}
+			return heightArr;
+		}
+		// // 判断是否该加载数据了
+		function addMore(){
+			var li =document.querySelectorAll("li");
+			var x = document.body.scrollTop || document.documentElement.scrollTop;
+			var y = document.body.clientHeight || document.documentElement.clientHeight;
+			// var h=window.innerHeight;
+			console.log(document.body.clientHeight)
+			var z = li[li.length-1].offsetTop;
+			if( x+y>z ){
+				addImg();
+				buju();
+			}
+		}
+
+		// 开始瀑布流布局
+		function buju(){
+			var li =document.querySelectorAll("li");
+			var num = Math.floor(window.innerWidth/li[0].offsetWidth);
+			heightArr=getMinHeight(num,li);
+			ul.style.width =num*li[0].offsetWidth +"px";
+			for(var i=num; i< li.length; i++){
+				li[i].style.position = "absolute";
+				minHeight = Math.min.apply(null,heightArr);
+				index = heightArr.indexOf(minHeight);
+				li[i].style.top = minHeight +"px";
+				li[i].style.left = li[index].offsetLeft +"px";
+				heightArr[index] += li[i].offsetHeight;
+			}
+		}
+	</script>
+</body>
+</html>

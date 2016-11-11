@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta charset="UTF-8">
+	<title>计算器</title>
+	<style>
+		body{
+			
+		}
+		div{
+			width: 216px;
+			margin: 200px auto;
+			background: #494949;
+			padding:10px;
+			border-radius: 5px;
+			color: white;
+		}
+		h2{
+			text-align: center;
+		}
+		p{	
+			width:208px;
+			height:64px;SVG
+			overflow: hidden;
+			text-align: right;
+			font:40px/1.6 arial;
+			margin: 0;
+			word-break: break-all;
+			-webkit-user-select:none;
+		}
+		table{
+			border-collapse: collapse;
+			/*border-spacing: 1;*/
+			/*只有当表格边框独立（即border-collapse:separate时），border-spacing和empty-cells(无内容的td)才起作用。*/
+			width: 216px;
+			table-layout: fixed; /*很好用耶，给table一个宽度，然后fixed，自己自动平均分配*/
+		}
+		table td{
+			/*width: 52px;  有了35行，这里就不用按个计算了*/   
+			text-align: center;
+			font:24px/1.6 arial; 
+			border: 1px solid #494949;
+			background: #7e7e7e;
+			cursor:pointer;
+			border-radius: 8px;
+			-webkit-user-select:none; /*不能选中*/
+		}
+		.last{
+			background: #ff8d0c;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h2>简易计算器</h2>
+		<p>0</p>
+		<table cellpadding="0">
+			<tr>
+				<td>AC</td>
+				<td>±</td>
+				<td>%</td>
+				<td class="last">÷</td>
+			</tr>
+			<tr>
+				<td class="shuzi">7</td>
+				<td class="shuzi">8</td>
+				<td class="shuzi">9</td>
+				<td class="last">×</td>
+			</tr>
+			<tr>
+				<td class="shuzi">4</td>
+				<td class="shuzi">5</td>
+				<td class="shuzi">6</td>
+				<td class="last">－</td>
+			</tr>
+			<tr>
+				<td class="shuzi">1</td>
+				<td class="shuzi">2</td>
+				<td class="shuzi">3</td>
+				<td class="last">＋</td>
+			</tr>
+			<tr>
+				<td colspan= "2" class="shuzi">0</td>
+				<td class="shuzi">.</td>
+				<td class="last">＝</td>
+			</tr>
+		</table>
+	</div>
+	<script src="calculator.js"></script>
+</body>
+</html>

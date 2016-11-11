@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--如果有edge，强制使用edge打开-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>基本地图展示</title>
+    <!--相关CSS  JS 文件-->
+    <link rel="stylesheet" href="//cache.amap.com/lbs/static/main1119.css"/>
+    <script src="//cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="//webapi.amap.com/maps?v=1.3&key=8ac5372ed4980d76059aaed3d1106a7b"></script>
+    <script type="text/javascript" src="//cache.amap.com/lbs/static/addToolbar.js"></script>
+    <style>
+        #container{
+            width:1000px;
+            height:700px;
+            margin:50px auto;
+        }
+        #tip {
+            background-color: #ddf;
+            color: #333;
+            border: 1px solid silver;
+            box-shadow: 3px 4px 3px 0px silver;
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            border-radius: 5px;
+            overflow: hidden;
+            line-height: 20px;
+            z-index: 1;
+        }
+        #tip input[type="text"] {
+            height: 25px;
+            border: 0;
+            padding-left: 5px;
+            width: 280px;
+            border-radius: 3px;
+            outline: none;
+        }
+        #panel {
+            position: absolute;
+            background-color: white;
+            max-height: 80%;
+            overflow-y: auto;
+            top: 10px;
+            right: 100px;
+            width: 250px;
+            border: solid 1px silver;
+            z-index: 2;
+        }
+        #bt {
+            border-radius: 5px;
+            background-color: red;
+            padding: 6px;
+            color: white;
+            position: absolute;
+            left:500px;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+
+
+    <div id="tip">
+        <input type="text" id="keyword" name="keyword" placeholder="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
+    </div>
+</div>
+<div id="panel"></div>
+
+起始位置：<input type="text" placeholder="请输入起点" class="road" id = "begin">
+终止位置：<input type="text" placeholder="请输入终点" class="road" id = "over">
+<input type="button" value="确定搜索">
+
+<div id='bt'>点击体验更多功能</div>
+
+<script>
+    //加载地图
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        //界面放大层级--相当于控制左边空间的+/-
+        zoom:11,
+        //经纬度
+        center: [121.24,31.00],
+        //地图样式
+        mapStyle:"normal",
+
+    });
+
+    //添加默认标记点   感觉配合窗体查询还不错哦
+    var markers=[1,2];  //数组存2个标记
+    markers[0] = new AMap.Marker({
+        position: [121.34,31.00],
+        map:map,
+        title: "大酒店",
+        //content:"大酒店"  //写了content默认用content的内容替换雨滴
+    });
+    //添加窗体查询
+    var infowindow = new AMap.InfoWindow({
+        content: '<h3>高德地图</h1><div>高德是中国领先的数字地图内容、导航和位置服务解决方案提供商。</div>',
+        offset: new AMap.Pixel(0, -10),
+        size:new AMap.Size(230,30)
+    })
+
+
+    //动态创建添加窗体内容
+    var contentDiv = document.createElement("div");
+    contentDiv.innerText='我是信息窗体';
+    infowindow.setContent(contentDiv);
+    //当点击的时候在当前位置显示窗体查询
+//    var clickHandle = AMap.event.addListener(markers[0], 'click', function() {
+//        infowindow.open(map, markers[0].getPosition())
+//
+//    })
+    markers[0].on('click',function(e){  //外部这样添加事件   和上面一样
+        infowindow.open(map,e.target.getPosition());
+    })
+
+
+    //高级窗体查询   ---封装进看书
+   function windowSpy(obj){    //同样封装进函数
+        AMap.plugin('AMap.AdvancedInfoWindow',function(){
+            var infowindow1 = new AMap.AdvancedInfoWindow({
+                content: '<h3 class="title">高德地图</h3>'+
+                '<div class="content">高德是中国领先的数字地图内容、'+
+                '导航和位置服务解决方案提供商。</div>',
+                asOrigin:false,
+                offset:new AMap.Pixel(0,-30), //相对于坐标点的偏移坐标
+
+            });
+           infowindow1.open(map,new AMap.LngLat(121.24,31.00));  //同一事件只能展示一个窗体查询
+            AMap.event.addListener(markers[0], 'click', function() {
+                infowindow1.open(map,new AMap.LngLat(121.34,31.00));//新建坐标new AMap.LngLat(121.34,31.00）
+                infowindow1.open(map,markers[0].getPosition()); //markers[0].getPosition()当前坐标，比上面的好用
+            })
+        })
+    }
+    windowSpy(markers[0]);
+
+    //右下角小窗口比例控件
+    AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView','AMap.Geolocation','AMap.MapType'],
+    function(){
+        map.addControl(new AMap.ToolBar()); //好像默认就有该控件，应该不需要
+        map.addControl(new AMap.Scale());  //好像默认就可以缩放，应该不需要
+
+        map.addControl(new AMap.OverView({isOpen:true}));
+
+        //map.addControl(new AMap.Geolocation());  //这个自动定位，可以不设置经纬度，不准吧
+        map.addControl(new AMap.MapType());   //卫星地图切换，默认在右上角
+    });
+
+
+    //圆圈坐标+窗体查询 ****   如果有多个标记点一定要用数组才能分别设置map
+    markers[1] = new AMap.Marker({
+        position: [121.24,31.00],
+    });
+    markers[1].setMap(map);
+    var circle = new AMap.Circle({
+        center: [121.24,31.00],
+        radius: 100,   //半径 0~100
+        fillOpacity:0.2,
+        strokeWeight:1   //边线
+    })
+    circle.setMap(map);
+    map.setFitView()   //显示当前圆点
+    var info = new AMap.InfoWindow({
+        content:"信息窗体<br>这里是方恒科技大厦",
+        offset:new AMap.Pixel(0,-30)  //相对于坐标点的偏移坐标
+    })
+    info.open(map,markers[1].getPosition())   //打开窗体查询
+
+
+    //自定义标记图标
+    var icon = new AMap.Icon({
+        image : 'http://vdata.amap.com/icons/b18/1/2.png',//24px*24px
+        //icon可缺省，缺省时为默认的蓝色水滴图标，
+        size : new AMap.Size(25,25)    //定义装图片的容器大小，超出部分隐藏
+    });
+    var marker2 = new AMap.Marker({
+        icon : icon,//24px*24px
+        position : [121.28,31.00],
+        offset : new AMap.Pixel(-12,-12),
+        map : map,
+    });
+    // marker.setMap();  //传空参移除点标记
+
+
+    //搜索插件 input
+    AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+        var autoOptions = {
+            city: "上海", //城市，默认全国
+            input: "keyword",//使用联想输入的input的id
+        };
+        autocomplete= new AMap.Autocomplete(autoOptions);
+        var placeSearch = new AMap.PlaceSearch({
+            city:'上海',
+            map:map
+        })
+        AMap.event.addListener(autocomplete, "select", function(e){
+            placeSearch.search(e.poi.name)
+        });
+    });
+
+    /*********   公交路线    ********/
+    var arr=['人民广场','上海站'];
+    function publicWay(){     //这样封装进函数，就可以随时调用
+        AMap.service(["AMap.Transfer"], function() {
+            var transOptions = {
+                map: map,
+                city: '上海',
+                panel:'panel',                            //公交城市
+                //cityd:'乌鲁木齐',
+                policy: AMap.TransferPolicy.LEAST_TIME //乘车策略
+            };
+            //构造公交换乘类
+            var trans = new AMap.Transfer(transOptions);
+            //根据起、终点坐标查询公交换乘路线
+            trans.search([{keyword:arr[0]},{keyword:arr[1]}], function(status, result){
+            });
+        });
+    }
+    //    publicWay();
+
+    /*********   自驾游   都用函数包裹，可以用传参数调用实现 ********/
+    function driver(){
+        AMap.service(["AMap.Driving"], function() {
+            var driving = new AMap.Driving({
+                map: map,
+                panel: "panel"
+            }); //构造路线导航类
+            // 根据起终点坐标规划步行路线
+            driving.search([
+                {keyword: '泗泾(公交站)'},
+                {keyword: '东方明珠'}
+            ]);
+            //传经纬度 好像更精确
+            // driving.search([116.379028, 39.865042], [116.427281, 39.903719], function(status, result) {
+            // });
+        });
+    }
+    //  driver();
+    /*********   步行   ********/
+    function walk(){
+        AMap.service(["AMap.Walking"], function() {
+            var MWalk = new AMap.Walking({
+                map: map,
+                panel: "panel"
+            }); //构造路线导航类
+            //根据起终点坐标规划步行路线
+            //MWalk.search([116.379028,39.865042], [116.427281,39.903719], function(status, result){
+            MWalk.search([
+                {keyword: '泗泾(公交站)'},
+                {keyword: '东方明珠'}
+            ], function(status, result) {
+            });
+        });
+    }
+//    walk();
+
+
+    /****   自己写的相关事件    ***/
+    //点击确定搜索路线
+    var ipt = document.querySelectorAll(".road");
+    var btn = document.querySelector("[type='button']");
+    //给自己的输入框加上自动检索关键词的功能
+    AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+        var autoOptions = {
+            city: "上海", //城市，默认全国
+            input: "begin",//使用联想输入的input的id
+        };
+        autocomplete= new AMap.Autocomplete(autoOptions);
+        //选定后给出提示的几个提示点
+//        var placeSearch = new AMap.PlaceSearch({
+//            city:'上海',
+//            map:map
+//        })
+//        AMap.event.addListener(autocomplete, "select", function(e){
+//            placeSearch.search(e.poi.name)
+//        });
+    });
+    AMap.plugin(['AMap.Autocomplete'],function(){
+        var autoOptions = {
+            city: "上海", //城市，默认全国
+            input: "over",//使用联想输入的input的id
+        };
+        autocomplete= new AMap.Autocomplete(autoOptions);
+    });
+    btn.onclick = function(){
+
+        arr[0] =ipt[0].value;
+        arr[1] =ipt[1].value;
+        publicWay();
+    }
+
+    //路线图拖拽
+    var drag = document.querySelector("#panel"); //路线面板
+    drag.onmousedown = function(ev){
+        var ev = ev ||window.event;
+        gapX = ev.clientX - drag.offsetLeft;
+        gapY = ev.clientY - drag.offsetTop;
+        document.onmousemove = function(ev){
+            var ev = ev || window.event;
+            drag.style.left = ev.clientX - gapX +"px";
+            drag.style.top = ev.clientY - gapY +"px";
+        }
+        drag.onmouseup=function(){
+            document.onmousemove = null;
+        }
+    }
+
+
+    //更多功能请点击进入
+    var button = document.getElementById('bt');
+    AMap.plugin(["AMap.Driving"], function() {
+        var driving = new AMap.Driving(); //构造驾车导航类
+        //根据起终点坐标规划驾车路线
+        driving.search([{keyword:"上海站"},{keyword:'泗泾'}],function(status,result){
+            button.onclick = function(){
+                driving.searchOnAMAP({
+                    origin:result.origin,
+                    destination:result.destination
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
+

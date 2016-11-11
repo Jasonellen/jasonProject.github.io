@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>购物车</title>
+	<<link rel="stylesheet" href="shopList.css">
+</head>
+<body>
+	<div class="myheader">
+		<div class="top-list">
+			<input type="checkbox" class="allCheck">
+			<span>全选</span>
+			<span>商品</span>
+			<span>单价(元)</span>
+			<span>数量</span>
+			<span>小计(元)</span>
+			<span>操作</span>
+		</div>
+	</div>
+
+	<div class="mybody">
+		<ul class="shopping-list">
+			<header>
+				<div class="left">
+					<div>
+						满减
+						<div></div>
+					</div>
+					<span>活动商品购满1000.00元， 即可享受满减</span>
+					<a href="javascript:void(0)">  去凑单 <span>&gt;</span></a>
+				</div>
+				<div class="right totalSum">0.00</div>
+			</header>
+			
+			<li class="">
+				<div class="box">
+					<div>
+						<div>
+							<input type="checkbox" class="preCheck">
+						</div>
+						<div></div>
+					</div>
+					<div class="content">
+						<div class="obj">
+							<img src="image/1.jpg" alt="">
+							<p><a href="">卢森Rosen尤克里里乌克丽丽 21寸23寸儿童小吉他ukulele乐器 R-10U 21寸</a></p>
+						</div>
+						<p>颜色：R-10U 21寸桃花心</p>
+
+						<div>
+							<p class="price">238.00</p>
+							<div>促销优惠⬇️</div>
+						</div>
+
+						<div>
+							<div class="minus">-</div>
+							<input type="text" value="1" class="jianshu">
+							<div class="plus">+</div>
+							<p>有货</p>
+						</div>
+						<strong>238.00</strong>
+						<div>
+							<a href="">删除</a><br>
+							<a href="">移到我的关注</a>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li>
+				<div class="box">
+					<div>
+						<div>
+							<input type="checkbox" class="preCheck">
+						</div>
+						<div class="hidden"></div>
+					</div>
+					<div class="content">
+						<div class="obj">
+							<img src="image/2.jpg" alt="">
+							<p><a href="">卢森Rosen吉他调音器 尤克里里 小提琴 贝司多功能电子校音器 红色</a></p>
+						</div>
+						<p>颜色：红色</p>
+
+						<div>
+							<p class="price">49.00</p>
+							<div>促销优惠⬇️</div>
+						</div>
+
+						<div>
+							<div class="minus">-</div>
+							<input type="text" value="1" class="jianshu">
+							<div class="plus">+</div>
+							<p>有货</p>
+						</div>
+						<strong>49.00</strong>
+						<div>
+							<a href="">删除</a><br>
+							<a href="">移到我的关注</a>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<footer>
+		<input type="checkbox" class="allCheck">
+		<span>全选</span>
+		<div class="left">
+			<a href="">删除选中的商品</a>
+			<a href="">移到我的关注</a>
+			<a href="">清除下柜商品</a>
+		</div>
+		<div class="right">
+			<p><span>已选择<span class="count">0</span>件商品</span></p>
+			<p class="total"><span>总价：</span><span class="totalSum">¥0.00</span><img src="image/price-tips.png" alt=""></p>
+			<p class="save"><span>已节省： </span><span>- ¥0.00</span></p>
+			
+		</div>
+		<div class="jieSuan">去结算</div>
+	</footer>
+
+	<script src=shopList.js></script>
+</body>
+</html>
