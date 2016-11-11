@@ -19,14 +19,15 @@
 
 * 邮件(269248791@qq.com)
 * QQ: 269248791
-* 博客园: [@奋斗蚁🐜](https://home.cnblogs.com/)
 * 个人博客: [@奋斗蚁🐜](https://Jasonellen.github.io/)
+* 博客园: [@奋斗蚁🐜](https://home.cnblogs.com/)
 
 ##关于我的博客园
 
 ```javascript   
   var Jasonellen = {
     nickName  : "Jasonellen",
-    '博客园' : "https://home.cnblogs.com/u/Jasonellen/"
+    '个人博客' : "https://jasonellen.github.io",
+    '博客园' : "https://home.cnblogs.com/u/Jasonellen/",
   }
 ```
