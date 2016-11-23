@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>日历📅</title>
+	<style>
+		ul,ol,li{
+			margin:0;
+			padding: 0;
+			list-style: none;
+		}
+		body{
+			background: #000;
+		}
+		.container{
+			width: 420px;
+			color: olive;
+		}
+		.container li{
+			width: 48px;
+			float: left;
+			border:1px solid #ccc;
+			border-radius: 10px;
+			font-size: 16px;
+		}
+		.week li{
+			text-align: center;
+			height: 25px;
+			line-height: 25px;
+			padding: 2px;
+			background: green;
+			color: white;
+		}
+		.wrap li{
+			width:48px;
+			float: left;
+			height:48px;
+			text-align: center;
+			line-height: 48px;
+			margin:2px;
+			cursor: pointer;
+		}
+
+		.box{
+			position: absolute;
+			top: 360px;
+		}
+		button{
+			padding: 10px;
+			font-size:20px;
+			color: olive;
+		}
+		.show{
+			position: absolute;
+			left: 500px;
+			top: 100px;
+			color: gold;
+			font-size: 80px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<ul class="week">
+			<li>星期日</li>
+			<li>星期一</li>
+			<li>星期二</li>
+			<li>星期三</li>
+			<li>星期四</li>
+			<li>星期五</li>
+			<li>星期六</li>
+		</ul>
+		<ul class="wrap">
+			<li>12</li>
+		</ul>
+	</div>
+	
+	<div class="box">
+		<button class="preY">上一年</button>
+		<button class="nextY">下一年</button>
+		<button class="preM">上个月</button>
+		<button class="nextM">下个月</button>
+	</div>
+
+	<div class="show">12</div>
+
+	<script>
+		var wrap =document.querySelector('.wrap');
+		var preM =document.querySelector('.preM');
+		var preY =document.querySelector('.preY');
+		var nextM =document.querySelector('.nextM');
+		var nextY =document.querySelector('.nextY');
+		var show =document.querySelector('.show');
+
+		var _Date = new Date();
+		//显示的年月
+		var show_year = _Date.getFullYear();
+		var show_month = _Date.getMonth();
+
+		//当前的年月日
+		var now_year = _Date.getFullYear();
+		var now_month = _Date.getMonth();
+		var date = _Date.getDate();
+		var inner =date;
+		
+		setDate();
+		preY.onclick=function(){
+			show_year--;
+			setDate();
+		}
+		nextY.onclick=function(){
+			show_year++;
+			setDate();
+		}
+		preM.onclick=function(){
+			show_month--;
+			if (show_month<0) {
+				show_month=11;
+				show_year--;
+			}
+			setDate();
+		}
+		nextM.onclick=function(){
+			show_month++;
+			if (show_month>0) {
+				show_month=0;
+				show_year++;
+			}
+			setDate();
+		}
+
+		function setDate(){
+			wrap.innerHTML='';  //清空列表
+			
+			var today = new Date(show_year,show_month,1); //获取本年本月第一天
+			var num = today.getDay(); //获取本月第一天是周几
+			for(var i=0; i<num ; i++){
+				wrap.appendChild(document.createElement('li')) //本月第一天之前添加空白标签
+			}
+
+			//本月最后一天通过下个月第0天可以获取到
+			var last_date = new Date(show_year,show_month+1,0).getDate();
+
+			//循环添加本月的日期列表，并将现在的当天设置背景颜色
+			for(var i=0; i<last_date; i++){
+				var li = document.createElement('li');
+				li.innerHTML = i+1;
+				
+				//如果显示的年月等于当前的年月，且当前日期等于循环的添加的li,改为选中状态
+				if( date == i+1 && show_year ==now_year && show_month == now_month){
+					li.style.background='red';
+					li.style.color='white';
+				}
+				wrap.appendChild(li);	
+			}
+
+			//设置每个li可以点击
+			var li = wrap.getElementsByTagName('li');
+			var length =li.length;
+			for(var i=0; i<length; i++){
+				li.index =i;
+				li[i].onclick=function(){
+					if(this.innerHTML){
+						for(var j=0; j<length; j++){
+							li[j].style.background='';
+							li[j].style.color='';
+						}
+						this.style.background='red';
+						this.style.color='white';
+						inner=this.innerHTML;
+						show.innerHTML=`${show_year}年${show_month}月${inner}日`;
+					}
+				}
+			}
+			//设置显示时间
+			show.innerHTML=`${show_year}年${show_month}月${inner}日`;	
+		}
+
+		
+		
+	</script>
+</body>
+</html>
