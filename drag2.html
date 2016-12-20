@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<style>
+ul,li{ margin:0;padding:0;list-style:none;}
+div{
+	width:200px; height:200px; background:red; text-align:center;
+	}
+ul{
+	width:600px; background-color:#000; 
+	}
+li {
+	margin:10px 20px;
+	}
+ul:after {
+	content:'';
+	display:block;
+	clear:both;
+	}
+
+</style>
+<script>
+window.onload=function(){
+	var oDiv = document.querySelector('div');
+	var oUl = document.querySelector('ul');
+	oDiv.ondragenter=function(){
+		this.innerHTML='可以松开了哦';
+	}
+	oDiv.ondragover=function(ev){
+		var ev=ev||event;
+		ev.preventDefault(); 
+	}
+	oDiv.ondragleave=function(){
+		this.innerHTML='把图片拖到这里';
+	}
+	oDiv.ondrop=function(ev){
+		var ev=ev||event;
+		ev.preventDefault(); //阻止默认事件，不然是外部图片就直接打开了
+
+		var fs=ev.dataTransfer.files; //拖拽的文件集合
+		for(var i=0; i<fs.length; i++){
+			if(fs[i].type.indexOf('image')!=-1){ //判断拖拽内容的类型是image
+				var fd=new FileReader();  //创建可以读文件的对象
+				fd.readAsDataURL(fs[i]);  //读
+				fd.onload=function(){  //读取成功直接执行onload
+					var oLi	=document.createElement('li');
+					oLi.style.float='left';
+					var oImg= document.createElement('img');
+					oImg.style.height='200px';
+					oImg.src = this.result;  //地址就是获取到的url信息
+					oLi.appendChild(oImg);
+					oUl.appendChild(oLi);
+				}
+			}else{
+				alert('非法图片');
+			}
+		}
+	}
+}
+
+</script>
+</head>
+
+<body>
+<div>把图片拖到这里</div>
+<ul></ul>
+</body>
+</html>
