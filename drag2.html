@@ -7,18 +7,18 @@
 ul,li{ margin:0;padding:0;list-style:none;}
 div{
 	width:200px; height:200px; background:red; text-align:center;
-	}
+}
 ul{
 	width:600px; background-color:#000; 
-	}
+}
 li {
 	margin:10px 20px;
-	}
+}
 ul:after {
 	content:'';
 	display:block;
 	clear:both;
-	}
+}
 
 </style>
 <script>
@@ -38,7 +38,7 @@ window.onload=function(){
 	oDiv.ondrop=function(ev){
 		var ev=ev||event;
 		ev.preventDefault(); //阻止默认事件，不然是外部图片就直接打开了
-
+		this.innerHTML='把图片拖到这里';
 		var fs=ev.dataTransfer.files; //拖拽的文件集合
 		for(var i=0; i<fs.length; i++){
 			if(fs[i].type.indexOf('image')!=-1){ //判断拖拽内容的类型是image
